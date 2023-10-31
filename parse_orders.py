@@ -1,5 +1,6 @@
 import argparse
 import csv
+from config import modify_list
 
 orders = []
 ORDER_ITEMS = 'מוצרים'
@@ -18,26 +19,16 @@ def parse_order_items(row):
         if not orig_items:
             return
         #print(items)
-        items = items.replace("דק, ", "דק_")
-        items = items.replace("עבה, ", "עבה_")
-        items = items.replace("תורה, ", "_תורה")
-
-        items = items.replace(", תכלת", "_תכלת")
-        items = items.replace(", לבן", "_לבן")
-        items = items.replace(", פס לבן", "_פס לבן")
-        items = items.replace(", כסף", "_כסף")
+        # Loop over modify list to change item names with comma into something else 
+        for t in modify_list:
+            items = items.replace(t[0], t[1])
         parsed_items = items.split(",")
         for item in parsed_items:
             #print(item)
             amount, name = item.split("×")
-            name = name.replace("דק_", "דק, ")
-            name = name.replace("עבה_", "עבה, ")
-            name = name.replace("_תורה", "תורה, ")
-            name = name.replace("_תכלת", ", תכלת")
-            name = name.replace("_לבן", ", לבן")
-            name = name.replace("_פס לבן", ", פס לבן")
-            name = name.replace("_כסף", ", כסף")
-
+            # Loop over modify list to change back the item with comma in their names
+            for t in modify_list:
+                name = name.replace(t[1], t[0])
             name = name.strip()
             amount = amount.strip()
             if name not in product_names:
