@@ -6,8 +6,8 @@ import xlsxwriter
 orders = []
 ORDER_ITEMS = 'מוצרים'
 ITEMS_SOLD  = 'Items sold'
-#NET_REVENUE = 'N. הכנסה'
-NET_REVENUE = "Net sales"
+NET_REVENUE = 'N. הכנסה'
+#NET_REVENUE = "Net sales"
 DATE = 'תאריך'
 SOLIDERS = 'הנחת חיילים'
 REGULAR = 'הזמנה רגילה'
@@ -32,7 +32,11 @@ def parse_order_items(row):
             items = items.replace(t[0], t[1])
         parsed_items = items.split(",")
         for item in parsed_items:
-            #print(item)
+            if "×" not in item:
+                print(f"Warning: couldn't find amount in item: {item}")
+                for i, a in enumerate(items):
+                    print(f"{i}: {a}")
+                continue
             amount, name = item.split("×")
             # Loop over modify list to change back the item with comma in their names
             for t in modify_list:
@@ -46,7 +50,8 @@ def parse_order_items(row):
                 amount = 1
             row[name] = int(amount)
     except Exception as e:
-        print(row)
+        #print(row)
+        print(f"Exception in row {row}")
         print(e)
 
 
