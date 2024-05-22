@@ -6,11 +6,13 @@ import xlsxwriter
 orders = []
 ORDER_ITEMS = 'מוצרים'
 ITEMS_SOLD  = 'Items sold'
-NET_REVENUE = 'N. הכנסה'
-#NET_REVENUE = "Net sales"
+NET_REVENUE = 'הכנסה נטו (מפורמט)'
 DATE = 'תאריך'
 SOLIDERS = 'הנחת חיילים'
 REGULAR = 'הזמנה רגילה'
+OUT = 'פלט'
+SUMMARY = 'סיכום'
+
 
 product_names = []
 
@@ -92,9 +94,13 @@ def generate_summary(summary_file_name, orders):
 
     workbook.close()
 
-def parse_orders(input_file_name, output_file_name, summary_file_name, start_date):
+def parse_orders(input_file_name, start_date):
 
-    with open(input_file_name, 'r') as file:
+    base_file_name = input_file_name.split(".")[0]
+    output_file_name = base_file_name + "_" + OUT + ".csv"
+    summary_file_name = base_file_name + "_" + SUMMARY + ".csv"
+
+    with open(input_file_name, 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
 
         for row in reader:
@@ -127,8 +133,6 @@ def parse_orders(input_file_name, output_file_name, summary_file_name, start_dat
 def main():
     parser = argparse.ArgumentParser(description='Parse Woocommerce orders')
     parser.add_argument('input_file', type=str, help='Input file - CSV you got from Woocommerce')
-    parser.add_argument('output_file', type=str, help='Output file - name of output file to create')
-    parser.add_argument('summary_file', type=str, help='Output file - name of output file to create')
     parser.add_argument('--start_date', type=str, default="2023-01-01 00:00:00", help='Start processing from this date')
     args = parser.parse_args()
     parse_orders(args.input_file, args.output_file, args.summary_file, args.start_date)
