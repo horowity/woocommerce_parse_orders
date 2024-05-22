@@ -1,4 +1,5 @@
 import argparse
+import os
 import csv
 from config import modify_list
 import xlsxwriter
@@ -96,7 +97,7 @@ def generate_summary(summary_file_name, orders):
 
 def parse_orders(input_file_name, start_date):
 
-    base_file_name = input_file_name.split(".")[0]
+    base_file_name = os.path.splitext(input_file_name)[0]
     output_file_name = base_file_name + "_" + OUT + ".csv"
     summary_file_name = base_file_name + "_" + SUMMARY + ".csv"
 
