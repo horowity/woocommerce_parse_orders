@@ -7,7 +7,7 @@ import xlsxwriter
 orders = []
 ORDER_ITEMS = 'מוצרים'
 ITEMS_SOLD  = 'Items sold'
-NET_REVENUE = 'הכנסה נטו (מפורמט)'
+NET_REVENUE = 'הכנסות נטו (מפורמט)'
 DATE = 'תאריך'
 SOLIDERS = 'הנחת חיילים'
 REGULAR = 'הזמנה רגילה'
@@ -99,7 +99,7 @@ def parse_orders(input_file_name, start_date):
 
     base_file_name = os.path.splitext(input_file_name)[0]
     output_file_name = base_file_name + "_" + OUT + ".csv"
-    summary_file_name = base_file_name + "_" + SUMMARY + ".csv"
+    summary_file_name = base_file_name + "_" + SUMMARY + ".xlsx"
 
     with open(input_file_name, 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
