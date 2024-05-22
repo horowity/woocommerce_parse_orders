@@ -135,7 +135,7 @@ def main():
     parser.add_argument('input_file', type=str, help='Input file - CSV you got from Woocommerce')
     parser.add_argument('--start_date', type=str, default="2023-01-01 00:00:00", help='Start processing from this date')
     args = parser.parse_args()
-    parse_orders(args.input_file, args.output_file, args.summary_file, args.start_date)
+    parse_orders(args.input_file, args.start_date)
     
 if __name__ == '__main__':
     main()
